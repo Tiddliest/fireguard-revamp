@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Navbar } from "@/components/Navbar";
-import { Shield, Users, ClipboardCheck, Bell, Tool, Book } from "lucide-react";
+import { Shield, Users, ClipboardCheck, Bell, Wrench, Book } from "lucide-react";
 
 const WhatWeDo = () => {
   const services = [
@@ -25,7 +25,7 @@ const WhatWeDo = () => {
       description: "Installation, maintenance, and testing of fire alarm systems to ensure they function properly when needed."
     },
     {
-      icon: Tool,
+      icon: Wrench,
       title: "Equipment Maintenance",
       description: "Regular inspection and maintenance of fire safety equipment to keep your systems in optimal condition."
     },
