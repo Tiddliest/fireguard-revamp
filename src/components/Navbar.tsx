@@ -1,5 +1,6 @@
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,14 +9,16 @@ export const Navbar = () => {
     <nav className="fixed w-full bg-white shadow-md z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <a href="/" className="text-2xl font-bold text-f11-navy">
+          <Link to="/" className="text-2xl font-bold text-f11-navy">
             F11 Fire Safety
-          </a>
+          </Link>
           
           <div className="hidden md:flex space-x-8">
-            <NavLink href="#services">Services</NavLink>
-            <NavLink href="#about">About</NavLink>
-            <NavLink href="#contact">Contact</NavLink>
+            <NavLink to="/who-we-are">Who We Are</NavLink>
+            <NavLink to="/what-we-do">What We Do</NavLink>
+            <NavLink to="/#services">Services</NavLink>
+            <NavLink to="/#about">About</NavLink>
+            <NavLink to="/#contact">Contact</NavLink>
           </div>
 
           <button 
@@ -28,9 +31,11 @@ export const Navbar = () => {
 
         {isOpen && (
           <div className="md:hidden pb-4">
-            <NavLink href="#services" mobile>Services</NavLink>
-            <NavLink href="#about" mobile>About</NavLink>
-            <NavLink href="#contact" mobile>Contact</NavLink>
+            <NavLink to="/who-we-are" mobile>Who We Are</NavLink>
+            <NavLink to="/what-we-do" mobile>What We Do</NavLink>
+            <NavLink to="/#services" mobile>Services</NavLink>
+            <NavLink to="/#about" mobile>About</NavLink>
+            <NavLink to="/#contact" mobile>Contact</NavLink>
           </div>
         )}
       </div>
@@ -39,20 +44,20 @@ export const Navbar = () => {
 };
 
 const NavLink = ({ 
-  href, 
+  to, 
   children, 
   mobile 
 }: { 
-  href: string; 
+  to: string; 
   children: React.ReactNode;
   mobile?: boolean;
 }) => (
-  <a
-    href={href}
+  <Link
+    to={to}
     className={`text-f11-navy hover:text-f11-red transition-colors ${
       mobile ? "block py-2" : ""
     }`}
   >
     {children}
-  </a>
+  </Link>
 );
