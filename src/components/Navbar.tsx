@@ -1,9 +1,41 @@
 import { Menu } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSectionClick = (sectionId: string) => {
+    if (location.pathname !== "/") {
+      // If not on homepage, navigate to homepage first
+      navigate("/?section=" + sectionId);
+    } else {
+      // If on homepage, scroll to section
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    setIsOpen(false);
+  };
+
+  // Handle scroll to section when navigating from another page
+  useEffect(() => {
+    if (location.pathname === "/" && location.search) {
+      const params = new URLSearchParams(location.search);
+      const section = params.get("section");
+      if (section) {
+        const element = document.getElementById(section);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          // Clean up the URL
+          window.history.replaceState({}, "", "/");
+        }
+      }
+    }
+  }, [location]);
 
   return (
     <nav className="fixed w-full bg-white shadow-md z-50">
@@ -16,9 +48,24 @@ export const Navbar = () => {
           <div className="hidden md:flex space-x-8">
             <NavLink to="/who-we-are">Who We Are</NavLink>
             <NavLink to="/what-we-do">What We Do</NavLink>
-            <NavLink to="/#services">Services</NavLink>
-            <NavLink to="/#about">About</NavLink>
-            <NavLink to="/#contact">Contact</NavLink>
+            <button
+              onClick={() => handleSectionClick("services")}
+              className="text-f11-navy hover:text-f11-red transition-colors"
+            >
+              Services
+            </button>
+            <button
+              onClick={() => handleSectionClick("about")}
+              className="text-f11-navy hover:text-f11-red transition-colors"
+            >
+              About
+            </button>
+            <button
+              onClick={() => handleSectionClick("contact")}
+              className="text-f11-navy hover:text-f11-red transition-colors"
+            >
+              Contact
+            </button>
           </div>
 
           <button 
@@ -33,9 +80,24 @@ export const Navbar = () => {
           <div className="md:hidden pb-4">
             <NavLink to="/who-we-are" mobile>Who We Are</NavLink>
             <NavLink to="/what-we-do" mobile>What We Do</NavLink>
-            <NavLink to="/#services" mobile>Services</NavLink>
-            <NavLink to="/#about" mobile>About</NavLink>
-            <NavLink to="/#contact" mobile>Contact</NavLink>
+            <button
+              onClick={() => handleSectionClick("services")}
+              className="block w-full text-left py-2 text-f11-navy hover:text-f11-red transition-colors"
+            >
+              Services
+            </button>
+            <button
+              onClick={() => handleSectionClick("about")}
+              className="block w-full text-left py-2 text-f11-navy hover:text-f11-red transition-colors"
+            >
+              About
+            </button>
+            <button
+              onClick={() => handleSectionClick("contact")}
+              className="block w-full text-left py-2 text-f11-navy hover:text-f11-red transition-colors"
+            >
+              Contact
+            </button>
           </div>
         )}
       </div>
